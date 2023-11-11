@@ -1,8 +1,5 @@
 "use client";
-import { textState } from "@/state/states";
 import Link from "next/link";
-import { useState } from "react";
-import { useRecoilState } from "recoil";
 
 export default function Plan() {
   return (

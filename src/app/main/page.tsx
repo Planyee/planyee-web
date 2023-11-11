@@ -1,7 +1,6 @@
 "use client";
 import { Group, Stack } from "@mantine/core";
 import Link from "next/link";
-import { useState } from "react";
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css";
 import { useSetRecoilState } from "recoil";

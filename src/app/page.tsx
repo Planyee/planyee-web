@@ -1,9 +1,5 @@
 "use client";
-import { Button } from "@mantine/core";
-import axios from "axios";
 import Image from "next/image";
-import Link from "next/link";
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Login() {

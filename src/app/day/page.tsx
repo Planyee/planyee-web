@@ -1,20 +1,12 @@
 "use client";
-import { textState } from "@/state/states";
 import { Group, Stack } from "@mantine/core";
-import { DatePicker } from "@mantine/dates";
 import Link from "next/link";
-import { useState } from "react";
-import { useRecoilState } from "recoil";
-import Calendar from "@/components/Calendar";
 
 export default function Day() {
-  // const [value, setValue] = useState<Date | null>(null);
-
   return (
     <>
       <div className="h-screen relative flex flex-col justify-center items-center w-full">
         {/* <DatePicker value={value} onChange={setValue} /> */}
-        <Calendar />
 
         <Stack className="flex flex-col gap-4">
           <div className="bg-[#FFF2F2] w-full h-12 rounded-xl">
