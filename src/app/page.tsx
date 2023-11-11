@@ -1,10 +1,20 @@
+"use client";
 import { Button } from "@mantine/core";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
+  const router = useRouter();
+
+  const handleNaverLogin = () => {
+    // 네이버 로그인 인증 요청
+    window.location.href =
+      "http://43.202.89.97:52458/oauth2/authorization/naver";
+  };
+
   return (
     <>
       <div className="h-screen relative bg-[#CB475B] flex flex-col items-center justify-center">
@@ -14,20 +24,14 @@ export default function Login() {
         </div>
 
         <div className="absolute bottom-0 mb-20">
-          <a href="/oauth2/authorization/naver">
-            {/* <Image
-              src="/images/naver_btn.png"
-              alt="Naver Login"
-              width={150}
-              height={40}
-            /> */}
+          <button onClick={handleNaverLogin}>
             <Image
               src="/images/naverBtn.png"
               alt="Naver Login"
               width={170}
               height={40}
             />
-          </a>
+          </button>
         </div>
       </div>
     </>

@@ -3,16 +3,10 @@ import { Group, Stack } from "@mantine/core";
 import Image from "next/image";
 import Link from "next/link";
 import { useRecoilValue } from "recoil";
-import { selectedDatesState } from "@/state/states";
+import { selectedDateState } from "@/state/states";
 
 export default function Plan() {
-  const selectedDates = useRecoilValue(selectedDatesState);
-  console.log(selectedDates); // 확인용 출력
-  // selectedDates 배열이 빈 경우를 고려해 조건문으로 확인
-  const lastSelectedDate =
-    selectedDates.length > 0 ? selectedDates[selectedDates.length - 1] : null;
-  const lastSelectedMonth = lastSelectedDate ? lastSelectedDate.month : "";
-  const lastSelectedDay = lastSelectedDate ? lastSelectedDate.day : "";
+  const selectedDate = useRecoilValue(selectedDateState);
 
   return (
     <>
@@ -34,9 +28,9 @@ export default function Plan() {
           <Stack>
             <p>날짜</p>
             <button className="rounded-full border border-gray-200 text-[#2C7488] font-medium mx-auto w-4/5 h-[50px]">
-              {lastSelectedDate && (
-                <p>{`${lastSelectedMonth}월 ${lastSelectedDay}일`}</p>
-              )}
+              {selectedDate.year
+                ? `${selectedDate.year}년 ${selectedDate.month}월 ${selectedDate.day}일`
+                : ""}
             </button>
 
             <div className="border-b border-gray-400 w-full my-4"></div>

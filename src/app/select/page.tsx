@@ -1,101 +1,107 @@
 "use client";
-import { textState } from "@/state/states";
+import { useRouter } from "next/navigation";
 import { Stack } from "@mantine/core";
-// import { Button, Center, Stack } from "@mantine/core";
 import Image from "next/image";
-import Link from "next/link";
-import { SetStateAction, useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
+import { useEffect, useState } from "react";
 
 export default function Select() {
-  const [imageUrl, setImageUrl] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState(""); // 유저가 선택한 카테고리
+  const [imageUrls, setImageUrls] = useState<any[]>([]);
+  const [selectedImages, setSelectedImages] = useState<any[]>([]);
+  const router = useRouter();
 
-  const handleCategoryChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    setSelectedCategory(event.target.value);
+  const handleImageClick = (imageData: any) => {
+    // 이미지가 이미 선택되었다면 선택 해제하고, 그렇지 않다면 선택
+    if (selectedImages.find((image) => image.imageUrl === imageData.imageUrl)) {
+      setSelectedImages(
+        selectedImages.filter((image) => image.imageUrl !== imageData.imageUrl)
+      );
+    } else {
+      setSelectedImages([...selectedImages, imageData]);
+    }
   };
 
   const handleImageSelection = async () => {
+    // 이미지 선택 확인 후, 다음 페이지로 이동
     try {
-      const response = await fetch("백엔드 API URL", {
+      const response = await fetch("http://43.202.89.97:52458/select", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ imageUrl, category: selectedCategory }),
+        body: JSON.stringify(selectedImages),
       });
 
-      if (response.ok) {
-        // 요청이 성공했을 때의 처리
-      } else {
+      if (!response.ok) {
         throw new Error(
           `API 호출이 실패하였습니다. 상태 코드: ${response.status}`
         );
       }
+
+      router.push("/main");
     } catch (error) {
-      console.error("이미지 업로드 및 카테고리 선택 실패", error);
+      console.error("이미지 정보 전송 실패", error);
     }
   };
 
   useEffect(() => {
-    // 이미지 가져오는 로직
-    // 백엔드 API에서 이미지 링크 가져오는 비동기 함수
-    const fetchImageFromBackend = async () => {
+    const fetchImagesFromBackend = async () => {
       try {
-        const response = await fetch("백엔드 API URL"); // 백엔드 API 호출
+        const response = await fetch("http://43.202.89.97:52458/select");
         if (!response.ok) {
           throw new Error(
             `API 호출이 실패하였습니다. 상태 코드: ${response.status}`
           );
         }
         const data = await response.json();
-        setImageUrl(data.imageUrl); // 이미지 URL을 상태로 저장
+        setImageUrls(data);
       } catch (error) {
         console.error("이미지 가져오기 실패", error);
       }
     };
 
-    fetchImageFromBackend(); // 이미지 가져오기 함수 호출
-  }, []); // useEffect 두 번째 매개변수로 빈 배열을 전달하여 한 번만 호출
+    fetchImagesFromBackend();
+  }, []);
 
   return (
-    <>
-      {/* <div className="flex flex-col h-screen justify-between"> */}
-      <div className="h-screen relative flex flex-col items-center w-full">
-        <Stack className="mt-12 gap-10">
-          <p>선호하는 장소를 선택해주세요</p>
-
-          <p>이미지링크 받아서 띄워줄 곳</p>
-          {imageUrl && (
-            <Image src={imageUrl} alt="이미지" width={200} height={200} />
-          )}
-
-          {/* 카테고리 선택 폼 */}
-          <select value={selectedCategory} onChange={handleCategoryChange}>
-            <option value="카테고리1">카테고리1</option>
-            <option value="카테고리2">카테고리2</option>
-            {/* 다른 카테고리 옵션들 추가 */}
-          </select>
-
-          {/* 이미지 선택 및 카테고리 전송 버튼 */}
-          <button onClick={handleImageSelection}>
-            이미지 선택 및 카테고리 전송
-          </button>
+    <div className="h-screen relative flex flex-col items-center w-full">
+      <div className="overflow-y-auto h-[calc(100%-5rem)] mt-12 pb-10">
+        <Stack className="gap-10">
+          <p className="text-2xl font-medium">선호하는 장소를 선택해주세요</p>
+          <div className="grid grid-cols-2 gap-4">
+            {imageUrls &&
+              imageUrls.map((imageData, index) => (
+                <div
+                  key={index}
+                  onClick={() => handleImageClick(imageData)}
+                  style={{ position: "relative", aspectRatio: "1" }}
+                  className={`border-4 ${
+                    selectedImages.find(
+                      (image) => image.imageUrl === imageData.imageUrl
+                    )
+                      ? "border-blue-500"
+                      : "border-transparent"
+                  }`}
+                >
+                  <Image
+                    src={imageData.imageUrl}
+                    alt="이미지"
+                    layout="fill"
+                    objectFit="cover"
+                  />
+                </div>
+              ))}
+          </div>
         </Stack>
-
-        <div className="absolute bottom-5 w-full">
-          <Link href="/main">
-            <button className="bg-[#CB475B] text-white w-full h-10">
-              확인
-            </button>
-          </Link>
-        </div>
       </div>
-    </>
+
+      <div className="absolute bottom-5 w-full">
+        <button
+          className="bg-[#CB475B] text-white w-full h-10"
+          onClick={handleImageSelection}
+        >
+          확인
+        </button>
+      </div>
+    </div>
   );
-}
-function fetchImageFromBackend() {
-  throw new Error("Function not implemented.");
 }
