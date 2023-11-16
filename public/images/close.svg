@@ -1,10 +1,1 @@
-<svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="close" clip-path="url(#clip0_290_348)">
-<path id="Vector" d="M26.9166 9.08084L24.9191 7.08334L17 15.0025L9.08081 7.08334L7.08331 9.08084L15.0025 17L7.08331 24.9192L9.08081 26.9167L17 18.9975L24.9191 26.9167L26.9166 24.9192L18.9975 17L26.9166 9.08084Z" fill="#323232"/>
-</g>
-<defs>
-<clipPath id="clip0_290_348">
-<rect width="34" height="34" fill="white"/>
-</clipPath>
-</defs>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z"/></svg>

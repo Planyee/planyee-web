@@ -1,14 +1,26 @@
 "use client";
 import { Group, Stack } from "@mantine/core";
 import Link from "next/link";
+import Image from "next/image";
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css";
 import { useSetRecoilState } from "recoil";
 import Calendar from "@/components/Calendar";
-import { selectedDateState } from "@/state/states";
+import { selectedDateState, planId } from "@/state/states";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+
+interface Plan {
+  planId: number;
+  planName: string;
+  date: string;
+}
 
 export default function Main() {
   const setSelectedDate = useSetRecoilState(selectedDateState);
+  const [plans, setPlans] = useState<Plan[]>([]);
+  const setPlanId = useSetRecoilState(planId); // planId 상태를 설정하는 함수를 가져옵니다.
+  const router = useRouter();
 
   const handleSelectDate = (selectedDate: {
     year: number;
@@ -18,42 +30,85 @@ export default function Main() {
     setSelectedDate(selectedDate);
   };
 
+  useEffect(() => {
+    const fetchPlans = async () => {
+      try {
+        const response = await fetch("http://43.202.89.97:52458/main");
+        if (!response.ok) {
+          throw new Error(
+            `API 호출이 실패하였습니다. 상태 코드: ${response.status}`
+          );
+        }
+        const data: Plan[] = await response.json();
+
+        // 문자열 형식으로 제공된 날짜를 Date 객체로 변환하여 정렬
+        const sortedData = data.sort(
+          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+        );
+        setPlans(data);
+      } catch (error) {
+        console.error("일정 정보 받아오기 실패", error);
+      }
+    };
+
+    fetchPlans();
+  }, []);
+
   return (
     <>
-      <div className="h-screen relative flex flex-col gap-10 items-center w-full">
-        <Calendar onSelectDate={handleSelectDate} />
+      <div className="h-screen relative">
+        <p className="text-2xl text-center font-semibold mt-2">일정 확인</p>
 
-        <Stack className="flex flex-col gap-4">
-          <div className="bg-[#FFF2F2] w-full h-12 rounded-xl">
-            <Group className="flex justify-between items-center h-full px-4">
-              <p>9월 16일</p>
-              <p>|</p>
-              <p>서울 중구 - 서울 종로구</p>
-            </Group>
+        <Stack className="flex flex-col gap-10 items-center w-full">
+          <Calendar onSelectDate={handleSelectDate} />
+
+          <div className="overflow-y-auto h-[calc(100% - 5rem)] mt-4 pb-10">
+            <Stack className="flex flex-col gap-4">
+              {plans.map((plan) => (
+                <button
+                  key={plan.planId}
+                  className="bg-[#E3F0F4] w-full h-12 rounded-xl"
+                  onClick={() => {
+                    setPlanId(plan.planId);
+                    router.push(`/list`);
+                  }}
+                >
+                  <Group className="flex justify-between items-center h-full px-4">
+                    <p>{plan.date}</p>
+                    <Image
+                      src="/images/line.svg"
+                      alt="Logo"
+                      width={0.5}
+                      height={1}
+                    />
+                    <p>{plan.planName}</p>
+                  </Group>
+                </button>
+              ))}
+            </Stack>
+            <Stack className="flex flex-col gap-4">
+              <div>예시</div>
+              <div>예시</div>
+              <div>예시</div>
+              <div>예시</div>
+              <div>예시</div>
+              <div>예시</div>
+              <div>예시</div>
+              <div>예시</div>
+              <div>예시</div>
+              <div>예시</div>
+            </Stack>
           </div>
-          <div className="bg-[#E3F0F4] w-full h-12 rounded-xl">
-            <Group className="flex justify-between items-center h-full px-4">
-              <p>9월 17일</p>
-              <p>|</p>
-              <p>홍대입구역 - 서울숲역</p>
-            </Group>
-          </div>
-          <div className="bg-[#E3F0F4] w-full h-12 rounded-xl">
-            <Group className="flex justify-between items-center h-full px-4">
-              <p>9월 24일</p>
-              <p>|</p>
-              <p>서울역 - 종로5가역</p>
-            </Group>
+
+          <div className="fixed bottom-0 left-0 w-full">
+            {/* 'fixed' 속성을 사용하여 화면 하단에 고정 */}
+            <Link href="/plan">
+              <button className="bg-[#2C7488] text-white w-full h-10">
+                일정 등록
+              </button>
+            </Link>
           </div>
         </Stack>
-
-        <div className="absolute bottom-5 w-full">
-          <Link href="/plan">
-            <button className="bg-[#2C7488] text-white w-full h-10">
-              일정 등록
-            </button>
-          </Link>
-        </div>
       </div>
     </>
   );

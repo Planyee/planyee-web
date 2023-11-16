@@ -55,7 +55,7 @@ export default function Calendar({ onSelectDate }: CalendarProps) {
   };
 
   return (
-    <div className="flex flex-col items-center p-4 bg-white rounded-none shadow-none w-64 h-auto mt-12">
+    <div className="flex flex-col items-center p-4 bg-white rounded-none shadow-none w-100 h-auto mt-12">
       <div className="flex items-center justify-between w-full mb-2">
         <button className="px-2 py-1" onClick={handlePrevMonth}>
           <FontAwesomeIcon icon={faChevronLeft} />
