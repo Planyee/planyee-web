@@ -7,6 +7,7 @@ import Map from "@/app/map/page";
 import Link from "next/link";
 import Image from "next/image";
 import "./Contentlistpage.css";
+import Loading from "@/components/Loading";
 
 const List: React.FC = () => {
   const planIdValue = useRecoilValue(planId);
@@ -17,6 +18,7 @@ const List: React.FC = () => {
     source: "",
     destination: "",
   }); // 출발지, 도착지 짧은 주소
+  const [loading, setLoading] = useState(true); // 로딩 상태 추가
 
   const [array, setArray] = useState<ArrayType | null>(null);
   const [contents, setContents] = useState<JSX.Element[] | null>(null);
@@ -81,6 +83,7 @@ const List: React.FC = () => {
       );
       const data = await response.json();
       setArray(data);
+      setLoading(false); // 데이터 받아오면 로딩 상태 변경
     }
     fetchData();
   }, [planIdValue]);
@@ -105,9 +108,11 @@ const List: React.FC = () => {
           array.recommendations.map((recommendation, index) => (
             <Group key={index}>
               <React.Fragment>
-                <img
+                <Image
                   src="/images/UI_image/information_bar_2.png"
                   alt="Information Bar"
+                  width={13}
+                  height={96}
                 />
                 <Stack>
                   <Group>
@@ -134,69 +139,99 @@ const List: React.FC = () => {
     GetAddress();
   }, [array]);
 
-  return MapClick ? (
-    array && <Map locations={array} onbuttonclickhandler={onclickhandler} />
-  ) : (
+  return (
     <>
-      <div className="h-screen relative">
-        <Group className="flex text-center mt-2">
-          <Link href="/main" className="absolute left-0">
-            <button>
-              <Image src="/images/prev.svg" alt="prev" width={15} height={15} />
-            </button>
-          </Link>
-          <p className="text-2xl mx-auto font-semibold">일정 등록</p>
-          <Link href="/main" className="absolute right-0">
-            <button>
-              <Image
-                src="/images/close.svg"
-                alt="close"
-                width={15}
-                height={15}
-              />
-            </button>
-          </Link>
-        </Group>
+      {loading ? (
+        <Loading />
+      ) : (
+        <>
+          {MapClick ? (
+            array && (
+              <Map locations={array} onbuttonclickhandler={onclickhandler} />
+            )
+          ) : (
+            <>
+              <div className="h-screen relative">
+                <Group className="flex text-center mt-2">
+                  <Link href="/main" className="absolute left-0">
+                    <button>
+                      <Image
+                        src="/images/prev.svg"
+                        alt="prev"
+                        width={15}
+                        height={15}
+                      />
+                    </button>
+                  </Link>
+                  <p className="text-2xl mx-auto font-semibold">일정 등록</p>
+                  <Link href="/main" className="absolute right-0">
+                    <button>
+                      <Image
+                        src="/images/close.svg"
+                        alt="close"
+                        width={15}
+                        height={15}
+                      />
+                    </button>
+                  </Link>
+                </Group>
 
-        <Stack className="flex flex-col items-center w-full">
-          <div className="gap-7 mt-12 text-lg font-semibold"></div>
-          <Stack className="flex flex-col gap-4">
-            <Group>
-              <span className="font-semibold">
-                {shortaddress.source} {shortaddress.destination}
-              </span>
-            </Group>
-            <div className="date_departure_destination">
-              <Stack>
-                <Group>
-                  <img src="/images/UI_image/information_bar.png" />
-                  <span>출발지</span>
-                  {source}
-                </Group>
-                {contents}
-                <Group>
-                  <img src="/images/UI_image/information_bar.png" />
-                  <span>도착지</span>
-                  {destination}
-                </Group>
-              </Stack>
-            </div>
-          </Stack>
-          <div className="fixed bottom-0 left-0 w-full">
-            <button
-              onClick={onclickhandler}
-              className="bg-[#2C7488] text-white w-full h-16"
-            >
-              <img
-                src="/images/UI_image/pathsearch.png"
-                alt="Pathsearch"
-                className="pathsearch"
-              />
-              경로 탐색
-            </button>
-          </div>
-        </Stack>
-      </div>
+                <Stack className="flex flex-col items-center w-full">
+                  <div className="gap-7 mt-12"></div>
+
+                  <Stack className="flex flex-col gap-4">
+                    <div className="overflow-y-auto h-[calc(100% - 5rem)] pb-20">
+                      <Group>
+                        <span className="font-semibold">
+                          {shortaddress.source} {shortaddress.destination}
+                        </span>
+                      </Group>
+                      <div className="date_departure_destination">
+                        <Stack>
+                          <Group>
+                            <Image
+                              src="/images/UI_image/information_bar.png"
+                              alt="Information Bar"
+                              width={13}
+                              height={96}
+                            ></Image>
+                            <p>출발지</p>
+                            {source}
+                          </Group>
+                          {contents}
+                          <Group>
+                            <Image
+                              src="/images/UI_image/information_bar.png"
+                              alt="Information Bar"
+                              width={13}
+                              height={96}
+                            ></Image>
+                            <p>도착지</p>
+                            {destination}
+                          </Group>
+                        </Stack>
+                      </div>
+                    </div>
+                  </Stack>
+                  <div className="fixed bottom-0 left-0 w-full">
+                    <button
+                      onClick={onclickhandler}
+                      className="bg-[#2C7488] text-white w-full h-16"
+                    >
+                      <img
+                        src="/images/UI_image/pathsearch.png"
+                        alt="Pathsearch"
+                        className="pathsearch"
+                      />
+                      경로 탐색
+                    </button>
+                  </div>
+                </Stack>
+              </div>
+            </>
+          )}
+        </>
+      )}
     </>
   );
 };

@@ -62,7 +62,7 @@ export default function Main() {
         <Stack className="flex flex-col gap-10 items-center w-full">
           <Calendar onSelectDate={handleSelectDate} />
 
-          <div className="overflow-y-auto h-[calc(100% - 5rem)] mt-4 pb-10">
+          <div className="overflow-y-auto h-[calc(100% - 5rem)] mt-2 pb-20">
             <Stack className="flex flex-col gap-4">
               {plans.map((plan) => (
                 <button
@@ -103,7 +103,7 @@ export default function Main() {
           <div className="fixed bottom-0 left-0 w-full">
             {/* 'fixed' 속성을 사용하여 화면 하단에 고정 */}
             <Link href="/plan">
-              <button className="bg-[#2C7488] text-white w-full h-10">
+              <button className="bg-[#2C7488] text-white w-full h-16">
                 일정 등록
               </button>
             </Link>

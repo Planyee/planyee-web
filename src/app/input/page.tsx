@@ -10,7 +10,7 @@ import {
 
 // props의 타입을 정의합니다.
 interface InputProps {
-  clickstate: string;
+  clickstate: "departure" | "destination";
   propsfunction: (address: string, lat: any, lon: any) => void;
   onMapClick: () => void;
 }
