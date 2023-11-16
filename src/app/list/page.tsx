@@ -39,7 +39,7 @@ const List: React.FC = () => {
     mainCategory: string[];
     subCategory: string[];
     address: string;
-    description: string; // 추가된 부분
+    description: string;
     latitude: number;
     longitude: number;
   }
