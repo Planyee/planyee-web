@@ -36,7 +36,7 @@ export const planState = atom({
   key: "planState",
   default: {
     date: "",
-    planName: "오늘의 일정",
+    planName: "나의 일정!",
     sourceLatitude: "",
     sourceLongitude: "",
     destinationLatitude: "",
