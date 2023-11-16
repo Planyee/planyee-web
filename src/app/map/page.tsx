@@ -202,7 +202,6 @@ const Map: React.FC<MappageProps> = ({ locations, onbuttonclickhandler }) => {
   }
 
   async function onstarthandler(locations: ArrayType) {
-    // console.log(locations + " fetch함수의 locations입니다.");
     var params = await trans(locations);
     // console.log(params + " fetch함수의 params입니다.");
     // console.log(JSON.stringify(params));
