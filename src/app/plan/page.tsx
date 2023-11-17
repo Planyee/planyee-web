@@ -6,14 +6,14 @@ import { Group, Stack } from "@mantine/core";
 import Image from "next/image";
 import Link from "next/link";
 import Input from "../input/page";
-import { useRecoilValue, useRecoilState } from "recoil";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
 import {
   selectedDateState,
   srcLocationState,
   destLocationState,
   translatedLocationState,
   additionalInputState,
+  planNameState,
   planState,
 } from "@/state/states";
 import Select from "@/components/Select";
@@ -47,10 +47,12 @@ export default function Plan(props: PlanpageProps) {
   const [isPopupOpen, setPopupOpen] = useState(false);
 
   const setadditionalInputState = useSetRecoilState(additionalInputState);
+  const setplanNameState = useSetRecoilState(planNameState);
   const setPlanState = useSetRecoilState(planState);
 
   const [plan, setPlan] = useRecoilState(planState);
   const [inputValue, setInputValue] = useState("");
+  const [currentName, setCurrentName] = useState("");
 
   const handleInputChange = (e: any) => {
     setInputValue(e.target.value);
@@ -59,7 +61,15 @@ export default function Plan(props: PlanpageProps) {
     });
   };
 
+  const handleInputNameChange = (e: any) => {
+    setCurrentName(e.target.value);
+    setplanNameState({
+      name: e.target.value,
+    });
+  };
+
   const additionalInputStateValue = useRecoilValue(additionalInputState);
+  const planNameStateValue = useRecoilValue(planNameState);
 
   useEffect(() => {
     setPlan((prevPlan) => ({
@@ -67,6 +77,13 @@ export default function Plan(props: PlanpageProps) {
       additionalCondition: additionalInputStateValue.input,
     }));
   }, [additionalInputStateValue]);
+
+  useEffect(() => {
+    setPlan((prevPlan) => ({
+      ...prevPlan,
+      planName: planNameStateValue.name,
+    }));
+  }, [planNameStateValue]);
 
   useEffect(() => {
     const { year, month, day } = selectedDate;
@@ -118,7 +135,7 @@ export default function Plan(props: PlanpageProps) {
 
   const onconfirmhandler = async () => {
     try {
-      const response = await fetch("https://43.202.89.97:52678/main", {
+      const response = await fetch("https://43.202.89.97:52458/main", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -190,6 +207,14 @@ export default function Plan(props: PlanpageProps) {
     }
   };
 
+  // 테스트 함수
+  // const handlePlanNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const updatedPlan = { ...plan, planName: e.target.value }; // 기존 planState를 복제하고 변경된 planName을 적용합니다.
+  //   setPlan(updatedPlan); // 변경된 planState를 설정합니다.
+  //   console.log(updatedPlan);
+  // };
+  // 테스트 함수
+
   return inputclicked ? (
     <Input
       clickstate={whatclicked}
@@ -215,7 +240,23 @@ export default function Plan(props: PlanpageProps) {
       <div className="overflow-y-auto h-[calc(100% - 5rem)] pb-20">
         <Stack className="text-center gap-7 mt-12">
           <Stack>
-            <p>날짜</p>
+            <p className="text-md font-bold">일정 이름</p>
+
+            <form>
+              <input
+                className="rounded-full hover:bg-gray-100 border border-gray-200 w-4/5 h-[50px] text-center"
+                placeholder="일정 이름을 입력해주세요"
+                type="text"
+                value={currentName}
+                onChange={handleInputNameChange}
+              />
+            </form>
+
+            <div className="border-b border-gray-400 w-full my-4"></div>
+          </Stack>
+
+          <Stack>
+            <p className="text-md font-bold">날짜</p>
             <Link href="/main">
               <button className="rounded-full border border-gray-200 text-[#2C7488] font-medium mx-auto w-4/5 h-[50px] hover:bg-gray-100">
                 {selectedDate.year
@@ -228,7 +269,7 @@ export default function Plan(props: PlanpageProps) {
           </Stack>
 
           <Stack>
-            <p>장소</p>
+            <p className="text-md font-bold">장소</p>
             <button
               onClick={departureclickhandler}
               className="rounded-full border border-gray-200 mx-auto w-4/5 h-[50px] hover:bg-gray-100"
@@ -277,28 +318,32 @@ export default function Plan(props: PlanpageProps) {
             </button>
             <div className="border-b border-gray-400 w-full my-4"></div>
           </Stack>
-
           <Stack>
-            <p>카테고리</p>
-            <button
-              className="rounded-full hover:bg-gray-100 border border-gray-200 mx-auto w-2/5 h-[40px] "
-              onClick={handleCategoryClick}
-            >
-              카테고리
-            </button>
+            <p className="text-md font-bold">카테고리</p>
+            <div className="mx-auto">
+              <Group className="grid grid-cols-10 gap-4">
+                <form className="col-span-7">
+                  <input
+                    className="rounded-full hover:bg-gray-100 border border-gray-200 mx-auto w-full h-[50px] text-center"
+                    placeholder="오늘의 테마를 적어주세요!"
+                    type="text"
+                    value={inputValue}
+                    onChange={handleInputChange}
+                  />
+                </form>
 
-            {isPopupOpen && <Select onClose={handleClose} />}
-          </Stack>
-          <Stack>
-            <form>
-              <input
-                className="rounded-full hover:bg-gray-100 border border-gray-200 mx-auto w-2/5 h-[40px] text-center"
-                placeholder="스타일 추가 입력"
-                type="text"
-                value={inputValue}
-                onChange={handleInputChange}
-              />
-            </form>
+                <div className="col-span-3 flex items-center">
+                  <button
+                    className="rounded-full hover:bg-gray-100 border border-gray-200 w-full h-[50px] "
+                    onClick={handleCategoryClick}
+                  >
+                    추천 테마
+                  </button>
+
+                  {isPopupOpen && <Select onClose={handleClose} />}
+                </div>
+              </Group>
+            </div>
           </Stack>
         </Stack>
       </div>
