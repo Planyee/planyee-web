@@ -25,7 +25,7 @@ export default function Select() {
   const handleImageSelection = async () => {
     // 이미지 선택 확인 후, 다음 페이지로 이동
     try {
-      const response = await fetch("http://43.202.89.97:52458/select", {
+      const response = await fetch("https://43.202.89.97:52678/select", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
