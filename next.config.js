@@ -4,7 +4,7 @@ const nextConfig = {
     appDir: true,
   },
 };
-
+// Fix
 /// module.exports = nextConfig
 module.exports = {
   images: {

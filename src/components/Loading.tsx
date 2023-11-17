@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Loader } from "@mantine/core";
+// Fix
 
 const Loading = () => {
   return (

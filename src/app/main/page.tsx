@@ -1,4 +1,5 @@
 "use client";
+// Fix
 import { Group, Stack } from "@mantine/core";
 import Link from "next/link";
 import Image from "next/image";

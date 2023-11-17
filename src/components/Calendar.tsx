@@ -4,6 +4,7 @@ import {
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
+// Fix
 
 const days = ["S", "M", "T", "W", "T", "F", "S"];
 

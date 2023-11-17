@@ -25,6 +25,7 @@ export default function RootLayout({
         <script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=jej3T0nAxd2uWgcHlRn3n7p8Kd7hDAWLHtvIkHEg"></script>
       </head>
       <body>
+        {/* Fix */}
         <RecoilRootProvider>
           <MantineProvider>
             <Container size={600}>{children}</Container>

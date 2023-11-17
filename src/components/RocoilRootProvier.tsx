@@ -1,5 +1,5 @@
-// recoilRootProvider.tsx
 "use client";
+// recoilRootProvider.tsx
 
 import { RecoilRoot } from "recoil";
 export default function RecoilRootProvider({

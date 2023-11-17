@@ -1,4 +1,5 @@
 "use client";
+// Fix
 import React, { useEffect, useRef } from "react";
 import "./Map.css";
 
