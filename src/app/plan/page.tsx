@@ -118,7 +118,7 @@ export default function Plan(props: PlanpageProps) {
 
   const onconfirmhandler = async () => {
     try {
-      const response = await fetch("http://43.202.89.97:52458/main", {
+      const response = await fetch("https://43.202.89.97:52678/main", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
