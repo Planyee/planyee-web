@@ -15,6 +15,7 @@ import {
   additionalInputState,
   planNameState,
   planState,
+  planId,
 } from "@/state/states";
 import Select from "@/components/Select";
 import { useRouter } from "next/navigation";
@@ -39,6 +40,7 @@ export default function Plan(props: PlanpageProps) {
   const router = useRouter();
   const appKey = "jej3T0nAxd2uWgcHlRn3n7p8Kd7hDAWLHtvIkHEg";
   const selectedDate = useRecoilValue(selectedDateState);
+  const setPlanId = useSetRecoilState(planId);
 
   const srcLocation = useRecoilValue(srcLocationState);
   const destLocation = useRecoilValue(destLocationState);
@@ -150,6 +152,8 @@ export default function Plan(props: PlanpageProps) {
 
       const responseData = await response.json();
       console.log("백엔드 응답:", responseData);
+      setPlanId(() => responseData.someValue);
+      
 
       // 테스트 코드
       // window.location.href = "/list";
