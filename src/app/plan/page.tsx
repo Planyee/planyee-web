@@ -152,7 +152,7 @@ export default function Plan(props: PlanpageProps) {
 
       const responseData = await response.json();
       console.log("백엔드 응답:", responseData);
-      setPlanId(() => responseData.someValue);
+      setPlanId((prev) => responseData);
       
 
       // 테스트 코드
