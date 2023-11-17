@@ -1,5 +1,4 @@
 "use client";
-// Fix
 import { useRouter } from "next/navigation";
 import { Stack } from "@mantine/core";
 import Image from "next/image";
@@ -13,12 +12,11 @@ export default function Select() {
   const handleImageClick = (imageData: any) => {
     // 이미지가 이미 선택되었다면 선택 해제하고, 그렇지 않다면 선택
     if (selectedImages.find((image) => image === imageData.name)) {
-      // 'image'는 이미지의 이름입니다.
       setSelectedImages(
         selectedImages.filter((image) => image !== imageData.name)
       );
     } else {
-      setSelectedImages([...selectedImages, imageData.name]); // 'imageData.name' 추가
+      setSelectedImages([...selectedImages, imageData.name]);
     }
   };
 
@@ -31,7 +29,7 @@ export default function Select() {
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify(selectedImages), // 이미지의 장소명 배열을 JSON 문자열로 변환
+        body: JSON.stringify(selectedImages),
       });
 
       if (!response.ok) {
@@ -67,7 +65,7 @@ export default function Select() {
 
   return (
     <div className="h-screen relative flex flex-col items-center w-full">
-      <div className="overflow-y-auto h-[calc(100%-5rem)] mt-12 pb-15">
+      <div className="overflow-y-auto h-[calc(100%-5rem)] mt-12 pb-16">
         <Stack className="gap-10">
           <p className="text-2xl font-medium">선호하는 장소를 선택해주세요</p>
           <div className="grid grid-cols-2 gap-4">
@@ -78,7 +76,7 @@ export default function Select() {
                   onClick={() => handleImageClick(imageData)}
                   style={{ position: "relative", aspectRatio: "1" }}
                   className={`border-4 ${
-                    selectedImages.includes(imageData.name) // 'selectedImages.includes(imageData.name)'을 사용하여 이미지가 선택되었는지 확인합니다.
+                    selectedImages.includes(imageData.name) // 이미지 선택 확인
                       ? "border-blue-500"
                       : "border-transparent"
                   }`}
