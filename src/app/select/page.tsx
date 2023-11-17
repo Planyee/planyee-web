@@ -49,7 +49,7 @@ export default function Select() {
   useEffect(() => {
     const fetchImagesFromBackend = async () => {
       try {
-        const response = await fetch("http://43.202.89.97:52458/select");
+        const response = await fetch("https://43.202.89.97:52678/select");
         if (!response.ok) {
           throw new Error(
             `API 호출이 실패하였습니다. 상태 코드: ${response.status}`
