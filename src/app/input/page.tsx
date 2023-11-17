@@ -156,7 +156,7 @@ const Input: React.FC<InputProps> = (props) => {
     <>
       <div className="h-screen relative">
         <div className="BaseMap" ref={mapRef} />
-        <div className="absolute bottom-5 w-full">
+        <div className="absolute bottom-0 w-full">
           <Link href="/plan">
             <button
               onClick={onconfirmhandler}
