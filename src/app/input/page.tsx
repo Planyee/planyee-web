@@ -50,7 +50,6 @@ const Input: React.FC<InputProps> = (props) => {
           "Content-Type": "application/json",
           appKey: appKey,
         },
-        credentials: "include",
       });
 
       if (!response.ok) {
