@@ -149,10 +149,11 @@ export default function Plan(props: PlanpageProps) {
       if (!response.ok) {
         throw new Error("네트워크 응답이 올바르지 않습니다.");
       }
-
+      
       const responseData = await response.json();
-      console.log("백엔드 응답:", responseData);
       setPlanId(responseData);
+      console.log("변경된 planId:", planId);
+      console.log("백엔드 응답:", responseData);
       
 
       // 테스트 코드
