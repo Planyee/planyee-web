@@ -61,7 +61,6 @@ const List: React.FC = () => {
           "Content-Type": "application/json",
           appKey: appKey,
         },
-        credentials: "include",
       });
 
       if (!response.ok) {

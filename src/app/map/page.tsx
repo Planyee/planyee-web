@@ -90,7 +90,6 @@ const Map: React.FC<MappageProps> = ({ locations, onbuttonclickhandler }) => {
           "Content-Type": "application/json",
           appKey: appKey,
         },
-        credentials: "include",
         body: params,
       });
 
