@@ -67,7 +67,7 @@ export default function Select() {
 
   return (
     <div className="h-screen relative flex flex-col items-center w-full">
-      <div className="overflow-y-auto h-[calc(100%-5rem)] mt-12 pb-20">
+      <div className="overflow-y-auto h-[calc(100%-5rem)] mt-12 pb-15">
         <Stack className="gap-10">
           <p className="text-2xl font-medium">선호하는 장소를 선택해주세요</p>
           <div className="grid grid-cols-2 gap-4">
