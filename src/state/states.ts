@@ -33,11 +33,19 @@ export const additionalInputState = atom({
   },
 });
 
+// 추가된 플랜 이름
+export const planNameState = atom({
+  key: "planNameState",
+  default: {
+    name: "",
+  },
+});
+
 export const planState = atom({
   key: "planState",
   default: {
     date: "",
-    planName: "오늘의 일정",
+    planName: "",
     sourceLatitude: "",
     sourceLongitude: "",
     destinationLatitude: "",
