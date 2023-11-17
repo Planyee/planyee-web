@@ -206,14 +206,14 @@ const Map: React.FC<MappageProps> = ({ locations, onbuttonclickhandler }) => {
     var params = await trans(locations);
     // console.log(params + " fetch함수의 params입니다.");
     // console.log(JSON.stringify(params));
-    await markerset(locations.source.latitude, locations.source.longitude, red);
+    await markerset(locations.source.latitude, locations.source.longitude, blue);
     await markerset(
       locations.destination.latitude,
       locations.destination.longitude,
-      red
+      blue
     );
     locations.recommendations.map((item) => {
-      markerset(item.latitude, item.longitude, blue);
+      markerset(item.latitude, item.longitude, red);
     });
     await routeLayer(params);
   }
