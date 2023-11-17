@@ -79,7 +79,7 @@ const List: React.FC = () => {
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(
-        `http://43.202.89.97:52458/list/${planIdValue}`
+        `https://43.202.89.97:52678/list/${planIdValue}`
       );
       const data = await response.json();
       setArray(data);
