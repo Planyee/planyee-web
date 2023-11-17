@@ -89,18 +89,6 @@ export default function Main() {
                 </button>
               ))}
             </Stack>
-            <Stack className="flex flex-col gap-4">
-              <div>예시</div>
-              <div>예시</div>
-              <div>예시</div>
-              <div>예시</div>
-              <div>예시</div>
-              <div>예시</div>
-              <div>예시</div>
-              <div>예시</div>
-              <div>예시</div>
-              <div>예시</div>
-            </Stack>
           </div>
 
           <div className="fixed bottom-0 left-0 w-full">
