@@ -195,7 +195,7 @@ const List: React.FC = () => {
                               width={13}
                               height={96}
                             ></Image>
-                            <p>출발지</p>
+                            <p className="text-md font-bold">출발지</p>
                             {source}
                           </Group>
                           {contents}
@@ -206,7 +206,7 @@ const List: React.FC = () => {
                               width={13}
                               height={96}
                             ></Image>
-                            <p>도착지</p>
+                            <p className="text-md font-bold">도착지</p>
                             {destination}
                           </Group>
                         </Stack>
