@@ -152,8 +152,8 @@ export default function Plan(props: PlanpageProps) {
       console.log("백엔드 응답:", responseData);
 
       // 테스트 코드
-      window.location.href = "/list";
-      // router.push("/list");
+      // window.location.href = "/list";
+      router.push("/list");
     } catch (error) {
       console.error("에러:", error);
     }
