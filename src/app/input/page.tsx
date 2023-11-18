@@ -162,7 +162,7 @@ const Input: React.FC<InputProps> = (props) => {
           <Link href="/plan">
             <button
               onClick={onconfirmhandler}
-              className="bg-[#CB475B] text-white w-full h-12"
+              className="bg-[#CB475B] text-white text-white font-semibold w-full h-12"
             >
               확인
             </button>
