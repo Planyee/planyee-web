@@ -94,7 +94,7 @@ export default function Main() {
           <div className="fixed bottom-0 left-0 w-full">
             {/* 'fixed' 속성을 사용하여 화면 하단에 고정 */}
             <Link href="/plan">
-              <button className="bg-[#2C7488] text-white w-full h-16">
+              <button className="bg-[#2C7488] text-white text-white font-semibold w-full h-16">
                 일정 등록
               </button>
             </Link>
