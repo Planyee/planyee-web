@@ -19,6 +19,7 @@ import {
 } from "@/state/states";
 import Select from "@/components/Select";
 import { useRouter } from "next/navigation";
+import Loading from "@/components/Loading";
 
 interface PlanpageProps {
   // 여기에 필요한 props 타입을 정의하세요
@@ -41,6 +42,7 @@ export default function Plan(props: PlanpageProps) {
   const appKey = "jej3T0nAxd2uWgcHlRn3n7p8Kd7hDAWLHtvIkHEg";
   const selectedDate = useRecoilValue(selectedDateState);
   const setPlanId = useSetRecoilState(planId);
+  const [loadingData, setLoadingData] = useState(false);
 
   const srcLocation = useRecoilValue(srcLocationState);
   const destLocation = useRecoilValue(destLocationState);
@@ -137,6 +139,8 @@ export default function Plan(props: PlanpageProps) {
 
   const onconfirmhandler = async () => {
     try {
+      setLoadingData(true); // 데이터를 가져오기 전에 로딩 상태를 true로 설정
+      
       const response = await fetch("https://43.202.89.97:52678/main", {
         method: "POST",
         headers: {
@@ -161,6 +165,8 @@ export default function Plan(props: PlanpageProps) {
       router.push("/list");
     } catch (error) {
       console.error("에러:", error);
+    } finally {
+      setLoadingData(false); // 데이터를 가져온 후에 로딩 상태를 false로 변경
     }
   };
 
@@ -230,7 +236,157 @@ export default function Plan(props: PlanpageProps) {
     />
   ) : (
     <div className="h-screen relative">
-      <Group className="flex text-center mt-2">
+      {loadingData ? (
+        <Loading />
+      ) : (
+        <>
+          <Group className="flex text-center mt-2">
+            <Link href="/main" className="absolute left-0">
+              <button>
+                <Image
+                  src="/images/prev.svg"
+                  alt="prev"
+                  width={15}
+                  height={15}
+                />
+              </button>
+            </Link>
+            <p className="text-2xl mx-auto font-semibold">일정 등록</p>
+            <Link href="/main" className="absolute right-0">
+              <button>
+                <Image
+                  src="/images/close.svg"
+                  alt="close"
+                  width={15}
+                  height={15}
+                />
+              </button>
+            </Link>
+          </Group>
+
+          <div className="overflow-y-auto h-[calc(100% - 5rem)] pb-20">
+            <Stack className="text-center gap-7 mt-12">
+              <Stack>
+                <p className="text-md font-bold">일정 이름</p>
+
+                <form>
+                  <input
+                    className="rounded-full hover:bg-gray-100 border border-gray-200 w-4/5 h-[50px] text-center"
+                    placeholder="일정 이름을 입력해주세요"
+                    type="text"
+                    value={currentName}
+                    onChange={handleInputNameChange}
+                  />
+                </form>
+
+                <div className="border-b border-gray-400 w-full my-4"></div>
+              </Stack>
+
+              <Stack>
+                <p className="text-md font-bold">날짜</p>
+                <Link href="/main">
+                  <button className="rounded-full border border-gray-200 text-[#2C7488] font-medium mx-auto w-4/5 h-[50px] hover:bg-gray-100">
+                    {selectedDate.year
+                      ? `${selectedDate.year}년 ${selectedDate.month}월 ${selectedDate.day}일`
+                      : ""}
+                  </button>
+                </Link>
+
+                <div className="border-b border-gray-400 w-full my-4"></div>
+              </Stack>
+
+              <Stack>
+                <p className="text-md font-bold">장소</p>
+                <button
+                  onClick={departureclickhandler}
+                  className="rounded-full border border-gray-200 mx-auto w-4/5 h-[50px] hover:bg-gray-100"
+                >
+                  <Group className="ml-4">
+                    <Image
+                      src="/images/logo_color.svg"
+                      alt="Logo"
+                      width={25}
+                      height={25}
+                      className="text-[#2C7488]"
+                    />
+                    <p
+                      className={`${
+                        translatedCoordinate.departure
+                          ? "text-black"
+                          : "text-gray-300"
+                      }`}
+                    >
+                      {translatedCoordinate.departure || "출발지 입력"}
+                    </p>
+                  </Group>
+                </button>
+                <button
+                  onClick={destinationclickhandler}
+                  className="rounded-full border border-gray-200 mx-auto w-4/5 h-[50px] hover:bg-gray-100"
+                >
+                  <Group className="ml-4">
+                    <Image
+                      src="/images/logo_color.svg"
+                      alt="Logo"
+                      width={25}
+                      height={25}
+                      className="text-[#2C7488]"
+                    />
+                    <p
+                      className={`${
+                        translatedCoordinate.destination
+                          ? "text-black"
+                          : "text-gray-300"
+                      }`}
+                    >
+                      {translatedCoordinate.destination || "도착지 입력"}
+                    </p>
+                  </Group>
+                </button>
+                <div className="border-b border-gray-400 w-full my-4"></div>
+              </Stack>
+              <Stack>
+                <p className="text-md font-bold">카테고리</p>
+                <div className="mx-auto">
+                  <Group className="grid grid-cols-10 gap-4">
+                    <form className="col-span-7">
+                      <input
+                        className="rounded-full hover:bg-gray-100 border border-gray-200 mx-auto w-full h-[50px] text-center"
+                        placeholder="오늘의 테마를 적어주세요!"
+                        type="text"
+                        value={inputValue}
+                        onChange={handleInputChange}
+                      />
+                    </form>
+
+                    <div className="col-span-3 flex items-center">
+                      <button
+                        className="rounded-full hover:bg-gray-100 border border-gray-200 w-full h-[50px] "
+                        onClick={handleCategoryClick}
+                      >
+                        추천 테마
+                      </button>
+
+                      {isPopupOpen && <Select onClose={handleClose} />}
+                    </div>
+                  </Group>
+                </div>
+              </Stack>
+            </Stack>
+          </div>
+
+          <div className="fixed bottom-0 left-0 w-full">
+            <button
+              className="bg-[#CB475B] text-white text-white font-semibold w-full h-16"
+              onClick={onconfirmhandler}
+            >
+              확인
+            </button>
+          </div>
+        </>
+      )}
+
+      {/* <Group className="flex text-center mt-2">
         <Link href="/main" className="absolute left-0">
           <button>
             <Image src="/images/prev.svg" alt="prev" width={15} height={15} />
@@ -362,7 +518,7 @@ export default function Plan(props: PlanpageProps) {
         >
           확인
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }
