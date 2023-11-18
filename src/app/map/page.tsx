@@ -1,7 +1,7 @@
 "use client";
 // Fix
 import React, { useEffect, useRef } from "react";
-import "./Map.css";
+// import "./Map.css";
 
 interface Location {
   latitude: any;
@@ -246,8 +246,13 @@ const Map: React.FC<MappageProps> = ({ locations, onbuttonclickhandler }) => {
 
   return (
     <div className="mappage">
-      <div className="basemap" ref={mapRef}>
-        <div className="user_input_confirm" onClick={onbuttonclickhandler}>
+      {/* <div className="basemap" ref={mapRef}> */}
+      <div className="basemap relative top-0 z-10 w-full h-full" ref={mapRef}>
+        {/* <div className="user_input_confirm" onClick={onbuttonclickhandler}> */}
+        <div
+          className="absolute top-full z-20 bg-red-600 w-full h-20 text-center text-white font-semibold text-lg flex items-center justify-center"
+          onClick={onbuttonclickhandler}
+        >
           확인
         </div>
       </div>
