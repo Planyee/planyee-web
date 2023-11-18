@@ -39,6 +39,8 @@ const Input: React.FC<InputProps> = (props) => {
         zoom: 18,
       });
       map.addListener("click", onclickhandler);
+      // test touched
+      map.addListener("touchend", onclickhandler);
     }
   }, []);
 
