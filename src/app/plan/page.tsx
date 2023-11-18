@@ -357,7 +357,7 @@ export default function Plan(props: PlanpageProps) {
 
       <div className="fixed bottom-0 left-0 w-full">
         <button
-          className="bg-[#CB475B] text-white w-full h-16"
+          className="bg-[#CB475B] text-white text-white font-semibold w-full h-16"
           onClick={onconfirmhandler}
         >
           확인
