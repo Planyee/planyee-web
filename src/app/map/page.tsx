@@ -224,7 +224,7 @@ const Map: React.FC<MappageProps> = ({ locations, onbuttonclickhandler }) => {
       map = new window.Tmapv2.Map(mapRef.current, {
         center: new window.Tmapv2.LatLng(37.5652045, 126.98702028),
         width: "100%",
-        height: "930px",
+        height: "900px",
         zoom: 14,
       });
       // 경로 표시 로직...
