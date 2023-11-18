@@ -250,7 +250,7 @@ const Map: React.FC<MappageProps> = ({ locations, onbuttonclickhandler }) => {
       <div className="basemap relative top-0 z-10 w-full h-full" ref={mapRef}>
         {/* <div className="user_input_confirm" onClick={onbuttonclickhandler}> */}
         <button
-          className="absolute top-full z-20 bg-red-600 w-full h-20 text-center text-white font-semibold text-lg flex items-center justify-center"
+          className="absolute top-full z-20 bg-[#CB475B] w-full h-16 text-center text-white font-semibold text-lg flex items-center justify-center"
           onClick={onbuttonclickhandler}
         >
           확인
