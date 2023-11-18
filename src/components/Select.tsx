@@ -100,7 +100,7 @@ export default function Select({ onClose }: any) {
             <button
               type="button"
               // className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
-              className="bg-[#CB475B] text-white w-full h-10 rounded-md hover:bg-pink-900"
+              className="bg-[#CB475B] text-white text-white font-semibold w-full h-10 rounded-md hover:bg-pink-900"
               onClick={handleConfirm}
             >
               확인
