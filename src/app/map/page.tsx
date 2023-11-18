@@ -224,7 +224,7 @@ const Map: React.FC<MappageProps> = ({ locations, onbuttonclickhandler }) => {
       map = new window.Tmapv2.Map(mapRef.current, {
         center: new window.Tmapv2.LatLng(37.5652045, 126.98702028),
         width: "100%",
-        height: "890px",
+        height: "100%",
         zoom: 14,
       });
       // 경로 표시 로직...
@@ -249,12 +249,12 @@ const Map: React.FC<MappageProps> = ({ locations, onbuttonclickhandler }) => {
       {/* <div className="basemap" ref={mapRef}> */}
       <div className="basemap relative top-0 z-10 w-full h-full" ref={mapRef}>
         {/* <div className="user_input_confirm" onClick={onbuttonclickhandler}> */}
-        <div
+        <button
           className="absolute top-full z-20 bg-red-600 w-full h-20 text-center text-white font-semibold text-lg flex items-center justify-center"
           onClick={onbuttonclickhandler}
         >
           확인
-        </div>
+        </button>
       </div>
     </div>
   );
