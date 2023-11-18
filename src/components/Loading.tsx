@@ -4,7 +4,7 @@ import { Loader } from "@mantine/core";
 
 const Loading = () => {
   return (
-    <div className="relative w-screen h-screen p-0 m-0">
+    <div className="relative w-full h-930px">
       {/* 배경 이미지 */}
       <Image
         src="/images/loading.svg"
